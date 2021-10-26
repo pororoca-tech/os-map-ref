@@ -24,8 +24,46 @@ module OsMapRef
       @map_reference ||= build_map_reference.freeze
     end
 
+    def map_reference_100km
+      prefix
+    end
+
+    def map_reference_10km
+      [prefix, map_reference_parts[1][0], map_reference_parts[2][0]].join(' ')
+    end
+
+    def map_reference_5km
+      x = map_reference_parts[1][1..-1].to_i
+      y = map_reference_parts[2][1..-1].to_i
+      quadrant = [%w[SW NW], %w[SE NE]][x > 5000 && 1 || 0][y > 5000 && 1 || 0]
+      [map_reference_10km, quadrant].join(' ')
+    end
+
+    def map_reference_1km
+      [prefix, map_reference_parts[1][0..1], map_reference_parts[2][0..1]].join(' ')
+    end
+
+    def map_reference_500m
+      x = map_reference_parts[1][2..-1].to_i
+      y = map_reference_parts[2][2..-1].to_i
+      quadrant = [%w[SW NW], %w[SE NE]][x > 500 && 1 || 0][y > 500 && 1 || 0]
+      [map_reference_1km, quadrant].join(' ')
+    end
+
+    def map_reference_100m
+      [prefix, map_reference_parts[1][0..2], map_reference_parts[2][0..2]].join(' ')
+    end
+
+    def map_reference_10m
+      [prefix, map_reference_parts[1][0..3], map_reference_parts[2][0..3]].join(' ')
+    end
+
+    def map_reference_1m
+      map_reference
+    end
+
     def build_map_reference
-      [grid_reference_prefix, short_easting, short_northing].join(" ")
+      [grid_reference_prefix, short_easting, short_northing].join(' ')
     end
 
     def grid_easting
