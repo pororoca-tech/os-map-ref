@@ -35,7 +35,7 @@ module OsMapRef
     def map_reference_5km
       x = map_reference_parts[1][1..-1].to_i
       y = map_reference_parts[2][1..-1].to_i
-      quadrant = [%w[SW NW], %w[SE NE]][x > 5000 && 1 || 0][y > 5000 && 1 || 0]
+      quadrant = [%w[SW NW], %w[SE NE]][(x > 5000 && 1) || 0][(y > 5000 && 1) || 0]
       [map_reference_10km, quadrant].join(' ')
     end
 
@@ -46,7 +46,7 @@ module OsMapRef
     def map_reference_500m
       x = map_reference_parts[1][2..-1].to_i
       y = map_reference_parts[2][2..-1].to_i
-      quadrant = [%w[SW NW], %w[SE NE]][x > 500 && 1 || 0][y > 500 && 1 || 0]
+      quadrant = [%w[SW NW], %w[SE NE]][(x > 500 && 1) || 0][(y > 500 && 1) || 0]
       [map_reference_1km, quadrant].join(' ')
     end
 
